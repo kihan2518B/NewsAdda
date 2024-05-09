@@ -25,7 +25,8 @@ const SigninForm: React.FC = () => {
             const jsonRes = await res.json()
             console.log(jsonRes);
             localStorage.setItem("authToken", jsonRes.auth_token);
-            localStorage.setItem("userData", JSON.stringify(jsonRes.user))
+            localStorage.setItem("userData", JSON.stringify(jsonRes.user));
+            localStorage.setItem("signedIn", "true");
             navigate('/')
         } catch (error) {
             console.log(error)
