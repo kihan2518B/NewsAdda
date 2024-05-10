@@ -2,31 +2,7 @@ import { useEffect, useReducer } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { API_ENDPOINT } from "../../config/constants";
 
-type Match = { //this is type object of details of matches when we fetch all matches at once
-  id: number,
-  isRunning: boolean,
-  name: string,
-  location: string,
-  sportName: string,
-  endsAt: string,
-  teams: { id: number, name: string }[],
-}
-
-type matchDetails = { //this is type object of full details of match
-  id: number,
-  isRunning: boolean,
-  name: string,
-  location: string,
-  endsAt: string,
-  startsAt: string,
-  score: {
-    [teamName: string]: string
-  },
-  teams: { id: number, name: string }[],
-  sportName: string,
-  playingTeam: number,
-  story: string,
-}
+import { matchDetails, Match } from "./types";
 
 //initializing state type
 type State = {
@@ -39,10 +15,10 @@ type State = {
 //initializing Action type
 type Action_Type =
   | { type: 'Fetch_Matches_Request' }
-  | { type: 'Fetch_Matches_Success'; }
+  | { type: 'Fetch_Matches_Success'; payload: matchDetails[] }
   | { type: 'Fetch_Matches_Failure'; payload: string }
   | { type: 'Fetch_LiveMatch_Request' }
-  | { type: 'Fetch_LiveMatch_Success'; payload: matchDetails }
+  | { type: 'Fetch_LiveMatch_Success'; }
   | { type: 'Fetch_LiveMatch_Failure'; payload: string };
 
 
@@ -67,6 +43,7 @@ const reducer = (state: State, action: Action_Type): State => {
         ...state,
         isLoading: false,
         isError: false,
+        matches: action.payload,
         errorMessage: ""
       }
     case 'Fetch_Matches_Failure':
@@ -89,7 +66,6 @@ const reducer = (state: State, action: Action_Type): State => {
         ...state,
         isLoading: false,
         isError: false,
-        matches: [...state.matches, action.payload],
         errorMessage: ""
       }
     case 'Fetch_LiveMatch_Failure':
@@ -122,47 +98,41 @@ const LiveGame = () => {
 
         //Filtering live matches
         const LiveMatches = data.matches.filter((match: Match) => match.isRunning)
-        console.log("LiveMatches", LiveMatches)
+        // console.log("LiveMatches", LiveMatches)
 
-        // Use a set to store IDs of already fetched matches
-        const fetchedMatchIds = new Set<number>();
+        //Array containing full details of live match
+        const LiveMatchesDetails: matchDetails[] = []
 
         //iterating in Live matches to call api to get match details
-        const fetchPromises = LiveMatches.map(async (match: Match) => {
-          if (!fetchedMatchIds.has(match.id)) {
-            await fetchLiveMatchDetails(match.id);
-            fetchedMatchIds.add(match.id); // Add the fetched match ID to the set
+        LiveMatches.map(async (match: Match) => {
+          try {
+            dispatch({ type: "Fetch_LiveMatch_Request" })
+            const response = await fetch(`${API_ENDPOINT}/matches/${match.id}`, {
+              headers: { 'content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+            })
+            const Livematch = await response.json();
+            console.log("Livematch", Livematch);
+            LiveMatchesDetails.push(Livematch)
+            dispatch({ type: "Fetch_LiveMatch_Success" }) //Live match data
+          } catch (e) {
+            console.log("Error While fetching match details", e);
+            dispatch({ type: "Fetch_LiveMatch_Failure", payload: "Cannot get match Details" })
           }
         });
-        await Promise.all(fetchPromises);
 
-        //We will not update state here
-        dispatch({ type: "Fetch_Matches_Success", })
+        console.log("LiveMatchesDetails", LiveMatchesDetails)
+
+        //We will update state With all Live matches
+        dispatch({ type: "Fetch_Matches_Success", payload: LiveMatchesDetails })
       } catch (error) {
         console.log("Error while fetching matches: ", error);
         dispatch({ type: "Fetch_Matches_Failure", payload: "Cant get Live Matches" })
       }
     }
 
-    const fetchLiveMatchDetails = async (id: number) => {
-      try {
-        dispatch({ type: "Fetch_LiveMatch_Request" })
-        const res = await fetch(`${API_ENDPOINT}/matches/${id}`, {
-          headers: { 'content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
-        })
-        const data = await res.json()
-        console.log("Live match data", data)
-        dispatch({ type: "Fetch_LiveMatch_Success", payload: data }) //Live match data
-      } catch (error) {
-        console.log("Error while fetching match details", error);
-        dispatch({ type: "Fetch_LiveMatch_Failure", payload: "Cannot get match Details" })
-      }
-    }
-
     //fetch request to get all matches
     fetchMatches()
   }, [])
-
   const { isLoading, matches, isError, errorMessage } = state
   if (isLoading) {
     return <>Loading...</>
@@ -173,38 +143,37 @@ const LiveGame = () => {
   console.log("matches", matches);
   return (
     <>
-      <div className="shrink-0 h-32 w-60 border-2 rounded-md bg-violet-300 hover:bg-violet-200 border-violet-900">
-        <div className="flex h-10 w-full items-center">
-          <div className="flex pl-4 w-[70%] font-bold text-xl">
-            <p>Cricket</p>
+      {matches.map((match) => (
+        <div key={match.id} className="shrink-0 h-40 w-60 border-2 rounded-md bg-violet-300 hover:bg-violet-200 border-violet-900">
+          <div className="flex h-10 w-full items-center">
+            <div className="flex pl-4 w-[70%] font-bold text-xl">
+              <p>{match.sportName}</p>
+            </div>
+            <div className="flex justify-center w-[30%]  text-xl">
+              <ArrowPathIcon className="h-6 w-6 cursor-pointer hover:text-gray-500" />
+            </div>
           </div>
-          <div className="flex justify-center w-[30%]  text-xl">
-            <ArrowPathIcon className="h-6 w-6 cursor-pointer hover:text-gray-500" />
+          <div className="mx-auto flex justify-start items-center w-[85%] h-10 text-sm">
+            <p>{match.name}</p>
           </div>
+          <hr className="border-1 border-violet-600" />
+          {match.score && Object.entries(match.score).map(([teamName, score]) => (
+            <div className="flex flex-col">
+              <div className="flex h-8 w-full items-center justify-around">
+                <div className="flex justify-end w-full font-bold text-sm">
+                  <p>{teamName}:</p>
+                </div>
+                <div className="flex justify-center w-full ">
+                  <p>{score}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+
         </div>
-        <div className="mx-auto flex justify-start items-center w-[85%] h-5 text-lg">
-          <p>IPL 2023,Delhi</p>
-        </div>
-        <div className="flex flex-col">
-          <div className="flex h-8 w-full items-center">
-            <div className="flex justify-center w-[30%] font-bold text-xl">
-              <p>CSK</p>
-            </div>
-            <div className="flex justify-center w-[70%] ">
-              <p>(20 Overs) 235/6</p>
-            </div>
-          </div>
-          <div className="flex h-8 w-full items-center">
-            <div className="flex justify-center w-[30%] font-bold text-xl">
-              <p>GT</p>
-            </div>
-            <div className="flex justify-center w-[70%] ">
-              <p>(19 Overs) 235/5</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      ))}
     </>
+
   );
 };
 
