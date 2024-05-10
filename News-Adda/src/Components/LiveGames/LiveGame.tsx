@@ -1,8 +1,9 @@
-import { useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { API_ENDPOINT } from "../../config/constants";
 
 import { matchDetails, Match } from "./types";
+import { ThemeContext } from "../../context/theme";
 
 //initializing state type
 type State = {
@@ -82,6 +83,8 @@ const reducer = (state: State, action: Action_Type): State => {
 }
 
 const LiveGame = () => {
+  const { theme } = useContext(ThemeContext)
+
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     console.log("Api request")
@@ -144,7 +147,7 @@ const LiveGame = () => {
   return (
     <>
       {matches.map((match) => (
-        <div key={match.id} className="shrink-0 h-40 w-60 border-2 rounded-md bg-violet-300 hover:bg-violet-200 border-violet-900">
+        <div key={match.id} className={`shrink-0 h-40 w-60 border-2 rounded-md  ${theme == 'dark' ? "bg-violet-700 hover:bg-violet-600 text-white border-violet-950" : "bg-violet-300 border-violet-900 hover:bg-violet-200"} `}>
           <div className="flex h-10 w-full items-center">
             <div className="flex pl-4 w-[70%] font-bold text-xl">
               <p>{match.sportName}</p>

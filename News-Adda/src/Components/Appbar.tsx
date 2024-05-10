@@ -1,10 +1,13 @@
 import { UserCircleIcon } from '@heroicons/react/24/outline';
-import { Fragment, useState } from 'react';
-import { Menu, Dialog, Transition } from '@headlessui/react';
+import { Fragment, useContext, useState } from 'react';
+import { Menu, Dialog, Transition, Switch } from '@headlessui/react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../context/theme';
+
 import { API_ENDPOINT } from '../config/constants';
-import logo from '../assets/NewsAdda_logo.png'
+
+import logo from '../assets/NewsAdda_logo.png';
 
 type Input = {
     current_password: string,
@@ -12,6 +15,20 @@ type Input = {
 }
 
 const Appbar = () => {
+    const { theme, setTheme } = useContext(ThemeContext);
+    const [enabled, setEnabled] = useState(theme === "dark");
+
+    const toggleTheme = () => {
+        let newTheme = ''
+        if (theme === 'light') {
+            newTheme = 'dark'
+        } else {
+            newTheme = 'light'
+        }
+        setEnabled(!enabled)
+        setTheme(newTheme)
+    }
+
     const [isOpen, setIsOpen] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm<Input>()
     const navigate = useNavigate();
@@ -45,14 +62,26 @@ const Appbar = () => {
     }
     return (
         <>
-            <div className="h-20 bg-violet-500 w-full flex items-around">
+            <div className={`h-16 ${theme == 'dark' ? 'bg-violet-800' : 'bg-violet-500 '} w-full flex items-around`}>
                 <div className="logo w-1/2 flex justify-end items-center">
                     <img className='h-20 w-40 object-cover' src={logo} alt="" />
                 </div>
                 <div className=" w-1/2 flex justify-end items-center">
+                    <Switch
+                        checked={enabled}
+                        onChange={toggleTheme}
+                        className={`${enabled ? 'bg-violet-400' : 'bg-violet-800'}
+          relative inline-flex h-[24px] w-[60px] mr-3 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                    >
+                        <span
+                            aria-hidden="true"
+                            className={`${enabled ? 'translate-x-9' : 'translate-x-0'}
+                    pointer-events-none inline-block h-[16px] w-[16px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                        />
+                    </Switch>
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
-                            <Menu.Button className="mr-2 inline-flex justify-center shadow-xl shadow-violet-600 rounded-md bg-gray-200 text-sm font-medium text-violet-500 hover:bg-violet-500 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+                            <Menu.Button className={`mr-2 inline-flex justify-center shadow-xl ${theme == 'dark' ? 'bg-violet-500 text-white hover:bg-violet-600' : 'bg-gray-200 hover:text-white hover:bg-violet-500'} shadow-violet-600 rounded-md  text-sm font-medium  focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}>
                                 <UserCircleIcon className={`h-10 w-10`} aria-hidden="true" />
                             </Menu.Button>
                         </div>

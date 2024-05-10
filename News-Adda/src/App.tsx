@@ -1,11 +1,13 @@
 import router from './routes';
 import { RouterProvider } from 'react-router-dom';
+import { useContext } from 'react';
+import { ThemeContext } from './context/theme';
 import './App.css'
 
 function App() {
-
+  const { theme } = useContext(ThemeContext)
   return (
-    <div className='h-screen w-full bg-purple-100'>
+    <div className={`${theme == 'dark' ? "dark" : "bg-gray-200"} h-screen w-full `}>
       <RouterProvider router={router} />
     </div>
   )
