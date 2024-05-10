@@ -4,6 +4,7 @@ import { Menu, Dialog, Transition } from '@headlessui/react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { API_ENDPOINT } from '../config/constants';
+import logo from '../assets/NewsAdda_logo.png'
 
 type Input = {
     current_password: string,
@@ -45,7 +46,9 @@ const Appbar = () => {
     return (
         <>
             <div className="h-20 bg-violet-500 w-full flex items-around">
-                <div className="logo w-1/2 flex justify-end items-center">News Adda</div>
+                <div className="logo w-1/2 flex justify-end items-center">
+                    <img className='h-20 w-40 object-cover' src={logo} alt="" />
+                </div>
                 <div className=" w-1/2 flex justify-end items-center">
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
