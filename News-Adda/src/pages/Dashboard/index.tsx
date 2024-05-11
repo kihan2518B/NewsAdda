@@ -19,14 +19,12 @@ const Dashboard = () => {
         }
     }, []);
     return (
-        <div className="h-screen w-screen">
+        <div className="h-full w-full">
             {showMessage && (
                 <div className="absolute h-10 w-32 top-0 left-0 bg-green-600 flex justify-center items-center">Signin Successful!</div>
             )}
             <Appbar />
-            <div className="">
-                <LiveGames />
-            </div>
+            <LiveGames />
         </div>
     )
 }
