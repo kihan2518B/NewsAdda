@@ -4,5 +4,5 @@
 @import 'tailwindcss/utilities';
 
 .dark {
-    @apply bg-violet-500 text-gray-200;
+    @apply bg-gray-800 text-gray-200;
 }

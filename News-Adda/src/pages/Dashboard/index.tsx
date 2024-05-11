@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import Appbar from "../../Components/Appbar"
 import LiveGames from "../../Components/LiveGames"
+import TrendingNews from "../../Components/TrendingNews"
 
 const Dashboard = () => {
     const token = localStorage.getItem("userData") ?? ""
@@ -25,6 +26,7 @@ const Dashboard = () => {
             )}
             <Appbar />
             <LiveGames />
+            <TrendingNews />
         </div>
     )
 }

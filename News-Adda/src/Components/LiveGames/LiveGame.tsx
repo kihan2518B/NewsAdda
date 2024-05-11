@@ -147,7 +147,7 @@ const LiveGame = () => {
   return (
     <>
       {matches.map((match) => (
-        <div key={match.id} className={`shrink-0 h-32 w-60 border-2 rounded-md  ${theme == 'dark' ? "bg-violet-700 hover:bg-violet-600 text-white border-violet-950" : "bg-violet-300 border-violet-900 hover:bg-violet-200"} `}>
+        <div key={match.id} className={`shrink-0 h-32 w-60 border-2 rounded-md  ${theme == 'dark' ? "bg-violet-500 hover:bg-violet-600 text-white border-violet-950" : "bg-violet-300 border-violet-900 hover:bg-violet-200"} `}>
           <div className="flex h-10 w-full items-center">
             <div className="flex pl-4 w-[70%] font-bold text-xl">
               <p>{match.sportName}</p>
