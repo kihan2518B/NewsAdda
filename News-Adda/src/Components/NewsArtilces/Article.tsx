@@ -1,10 +1,10 @@
-import { useContext } from "react"
-import { ThemeContext } from "../../context/theme"
+// import { useContext } from "react"
+// import { ThemeContext } from "../../context/theme"
 
 const Article = () => {
-    const { theme } = useContext(ThemeContext)
+    // const { theme } = useContext(ThemeContext)
     return (<>
-        
+
     </>)
 }
 
