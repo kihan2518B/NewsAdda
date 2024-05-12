@@ -2,6 +2,7 @@ import { API_ENDPOINT } from "../../config/constants"
 import { MatchesDispatch } from "./reducer"
 import { Match } from "./types"
 import { matchDetails } from "./types"
+import { State } from "./reducer"
 
 export const fetchMatches = async (dispatch: MatchesDispatch) => {
     const token = localStorage.getItem("authToken") ?? ""
@@ -46,4 +47,28 @@ export const fetchMatches = async (dispatch: MatchesDispatch) => {
         console.log("Error while fetching matches: ", error);
         dispatch({ type: "Fetch_Matches_Failure", payload: "Cant get Live Matches" })
     }
+}
+
+export const refreshMatch = async (matchId: number, dispatch: MatchesDispatch, state: State) => {
+    const token = localStorage.getItem("authToken");
+    try {
+        const res = await fetch(`${API_ENDPOINT}/matches/${matchId}`, {
+            headers: { 'content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+        })
+        const data = await res.json()
+
+        //updating match data which matches matchID
+        const updatedMatches: matchDetails[] = state.matches.map((match) => {
+            if (match.id === matchId) {
+                return data; // Replace the old match with the updated match data
+            } else {
+                return match; // Keep other matches as they are
+            }
+        });
+
+        dispatch({ type: 'Refresh_Match_Details', payload: updatedMatches }) // match data
+    } catch (error) {
+        console.log("Error while fetching match details", error);
+    }
+
 }

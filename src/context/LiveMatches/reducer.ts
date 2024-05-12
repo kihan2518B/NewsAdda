@@ -1,7 +1,7 @@
 import { matchDetails } from "./types"
 
 //initializing state type
-type State = {
+export type State = {
     isLoading: boolean,
     matches: matchDetails[],
     isError: boolean,
@@ -14,7 +14,7 @@ export const initialState: State = {
     matches: [],
     isError: false,
     errorMessage: ""
-  }
+}
 
 //initializing Action type
 type MatchAction =
@@ -23,7 +23,8 @@ type MatchAction =
     | { type: 'Fetch_Matches_Failure'; payload: string }
     | { type: 'Fetch_LiveMatch_Request' }
     | { type: 'Fetch_LiveMatch_Success'; }
-    | { type: 'Fetch_LiveMatch_Failure'; payload: string };
+    | { type: 'Fetch_LiveMatch_Failure'; payload: string }
+    | { type: 'Refresh_Match_Details'; payload: matchDetails[] }
 
 export type MatchesDispatch = React.Dispatch<MatchAction>;
 
@@ -57,14 +58,12 @@ export const reducer = (state: State, action: MatchAction): State => {
                 ...state,
                 isLoading: true,
                 isError: false,
-                errorMessage: ""
             }
         case 'Fetch_LiveMatch_Success':
             return {
                 ...state,
                 isLoading: false,
                 isError: false,
-                errorMessage: ""
             }
         case 'Fetch_LiveMatch_Failure':
             return {
@@ -73,6 +72,14 @@ export const reducer = (state: State, action: MatchAction): State => {
                 matches: [],
                 isError: true,
                 errorMessage: action.payload
+            }
+        case 'Refresh_Match_Details':
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                matches: action.payload,
+                errorMessage: ""
             }
         default:
             return state;

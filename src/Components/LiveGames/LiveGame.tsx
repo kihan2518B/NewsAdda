@@ -3,6 +3,7 @@ import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
 import { reducer, initialState } from "../../context/LiveMatches/reducer";
 import { fetchMatches } from "../../context/LiveMatches/action";
+import { refreshMatch } from "../../context/LiveMatches/action";
 import { ThemeContext } from "../../context/theme";
 
 const LiveGame = () => {
@@ -21,8 +22,8 @@ const LiveGame = () => {
     return <div className="text-red-500">{errorMessage}</div>
   }
 
-  const refreshMatch = () => {
-    // window.location.reload()
+  const handleRefreshMatch = (matchId: number) => {
+    refreshMatch(matchId, dispatch, state)
   }
 
   console.log("matches", matches);
@@ -35,7 +36,7 @@ const LiveGame = () => {
               <p>{match.sportName}</p>
             </div>
             <div className="flex justify-center w-[30%]  text-xl">
-              <ArrowPathIcon onClick={refreshMatch} className="h-6 w-6 cursor-pointer hover:text-gray-500" />
+              <ArrowPathIcon onClick={() => handleRefreshMatch(match.id)} className="h-6 w-6 cursor-pointer hover:text-gray-500" />
             </div>
           </div>
           <div className="mx-auto flex justify-start items-center w-[85%] h-10 text-sm">
