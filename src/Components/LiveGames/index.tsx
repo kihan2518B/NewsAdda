@@ -1,9 +1,17 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import LiveGame from "./LiveGame";
 import { ThemeContext } from "../../context/theme";
+import { useMatchDispatch } from "../../context/LiveMatches/context";
+import { fetchMatches } from "../../context/LiveMatches/action";
 
 const LiveGames = () => {
     const { theme } = useContext(ThemeContext)
+    const MatchesDispatch: any = useMatchDispatch()
+
+    useEffect(() => {
+        fetchMatches(MatchesDispatch)
+    })
+
     return (
         <>
             <div className="h-44 w-full py-3">

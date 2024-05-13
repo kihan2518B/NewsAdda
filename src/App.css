@@ -1,0 +1,27 @@
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+  /* Adjust the width as desired */
+  height: 5px;
+  /* Adjust the height for horizontal scrollbars */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgb(139 92 246);
+  /* Adjust color and opacity */
+  border-radius: 5px;
+  /* Optional for rounded corners */
+}
+
+.scrollbar2::-webkit-scrollbar {
+  width: 5px;
+  /* Adjust the width as desired */
+  height: 5px;
+  /* Adjust the height for horizontal scrollbars */
+}
+
+.scrollbar2::-webkit-scrollbar-thumb {
+  background-color: rgb(109 40 217);
+  /* Adjust color and opacity */
+  border-radius: 5px;
+  /* Optional for rounded corners */
+}

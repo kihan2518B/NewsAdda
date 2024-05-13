@@ -15,34 +15,30 @@ export const fetchMatches = async (dispatch: MatchesDispatch) => {
         const data = await res.json()
         console.log(data)
 
-        //Filtering live matches
-        const LiveMatches = data.matches.filter((match: Match) => match.isRunning)
-        // console.log("LiveMatches", LiveMatches)
-
         //Array containing full details of live match
-        const LiveMatchesDetails: matchDetails[] = []
+        const AllMatchesDetails: matchDetails[] = []
 
         //iterating in Live matches to call api to get match details
-        LiveMatches.map(async (match: Match) => {
+        data.matches.map(async (match: Match) => {
             try {
-                dispatch({ type: "Fetch_LiveMatch_Request" })
+                dispatch({ type: "Fetch_MatchDetails_Request" })
                 const response = await fetch(`${API_ENDPOINT}/matches/${match.id}`, {
                     headers: { 'content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
                 })
-                const Livematch = await response.json();
-                // console.log("Livematch", Livematch);
-                LiveMatchesDetails.push(Livematch)
-                dispatch({ type: "Fetch_LiveMatch_Success" }) //Live match data
+                const MatchDetails = await response.json();
+                // console.log("MatchDetails", MatchDetails);
+                AllMatchesDetails.push(MatchDetails)
+                dispatch({ type: "Fetch_MatchDetails_Success" }) //Live match data
             } catch (e) {
                 console.log("Error While fetching match details", e);
-                dispatch({ type: "Fetch_LiveMatch_Failure", payload: "Cannot get match Details" })
+                dispatch({ type: "Fetch_MatchDetails_Failure", payload: "Cannot get match Details" })
             }
         });
 
-        // console.log("LiveMatchesDetails", LiveMatchesDetails)
+        console.log("AllMatchesDetails", AllMatchesDetails)
 
         //We will update state With all Live matches
-        dispatch({ type: "Fetch_Matches_Success", payload: LiveMatchesDetails })
+        dispatch({ type: "Fetch_Matches_Success", payload: AllMatchesDetails })
     } catch (error) {
         console.log("Error while fetching matches: ", error);
         dispatch({ type: "Fetch_Matches_Failure", payload: "Cant get Live Matches" })

@@ -49,7 +49,7 @@ const NewsArticles = () => {
     return (
         <>
             <TabGroup>
-                <div className={`News-Articles  md:h-[90vh] w-full ${theme == 'dark' ? "bg-violet-500  text-white " : "bg-violet-400 "}  rounded-xl`}>
+                <div className={`News-Articles  md:h-[95vh] w-full ${theme == 'dark' ? "bg-violet-500  text-white " : "bg-violet-400 "}  rounded-xl`}>
                     <div id="heading-section" className="h-12 w-full ">
                         <div className={` h-full w-full flex items-center justify-evenly text-xl max-[1200px]:text-lg max-[1000px]:text-base max-[835px]:text-xs`}>
                             <TabList className="flex gap-4 overflow-x-auto">
@@ -67,7 +67,7 @@ const NewsArticles = () => {
                     <TabPanels >
                         {categories.map((category) => (
                             <TabPanel key={category}>
-                                <div id="Articles" className={`h-[70vh] md:h-[80vh] w-full overflow-y-auto flex flex-col gap-3`}>
+                                <div id="Articles" className={`h-[70vh] md:h-[80vh] w-full overflow-y-auto scrollbar2 flex flex-col gap-3 rounded-b-xl`}>
                                     {articles.filter((article) => article.sport.name === category).map((article) => (
                                         <div key={article.id} className={` mx-auto flex gap-2 ${theme == 'dark' ? "bg-violet-700 hover:bg-violet-600 text-white border-violet-950" : "bg-violet-300 border-violet-900 hover:bg-violet-200"} h-[15vw] max-[651px]:h-[16vw] max-[592px]:h-[18vw] max-[581px]:h-[20vw] max-[545px]:h-[22vw] max-[500px]:h-[26vw] max-[421px]:h-[28vw] max-[391px]:h-[32vw] max-[381px]:h-[34vw] max-[353px]:h-[36vw] max-[321px]:h-[38vw] w-[98%] border `}>
                                             <div className="h-full w-[70%] flex flex-col">

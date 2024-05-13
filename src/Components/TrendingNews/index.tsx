@@ -1,5 +1,7 @@
 import { useContext } from "react"
 import NewsArticles from "../NewsArtilces"
+import YourNews from "../YourNews"
+
 import { ThemeContext } from "../../context/theme"
 
 const TrendingNews = () => {
@@ -11,8 +13,8 @@ const TrendingNews = () => {
                 <div className={`${theme == 'dark' ? ' shadow-violet-600' : 'shadow-violet-400 '} shadow-md rounded-xl md:w-2/3 w-full h-full flex-grow sm:col-span-1`}>
                     <NewsArticles />
                 </div>
-                <div className="bg-red-500 w-full md:w-1/3 flex-grow sm:col-span-1 min-h-96 rounded-md">
-                    {/* Favourites */}
+                <div className={`${theme == 'dark' ? ' shadow-violet-600' : 'shadow-violet-400 '} shadow-md rounded-xl w-full md:w-1/3 flex-grow sm:col-span-1 min-h-96`}>
+                    <YourNews />
                 </div>
             </div>
 

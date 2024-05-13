@@ -17,13 +17,13 @@ export const initialState: State = {
 }
 
 //initializing Action type
-type MatchAction =
+export type MatchAction =
     | { type: 'Fetch_Matches_Request' }
     | { type: 'Fetch_Matches_Success'; payload: matchDetails[] }
     | { type: 'Fetch_Matches_Failure'; payload: string }
-    | { type: 'Fetch_LiveMatch_Request' }
-    | { type: 'Fetch_LiveMatch_Success'; }
-    | { type: 'Fetch_LiveMatch_Failure'; payload: string }
+    | { type: 'Fetch_MatchDetails_Request' }
+    | { type: 'Fetch_MatchDetails_Success'; }
+    | { type: 'Fetch_MatchDetails_Failure'; payload: string }
     | { type: 'Refresh_Match_Details'; payload: matchDetails[] }
 
 export type MatchesDispatch = React.Dispatch<MatchAction>;
@@ -53,19 +53,19 @@ export const reducer = (state: State, action: MatchAction): State => {
                 isError: true,
                 errorMessage: action.payload
             }
-        case 'Fetch_LiveMatch_Request':
+        case 'Fetch_MatchDetails_Request':
             return {
                 ...state,
                 isLoading: true,
                 isError: false,
             }
-        case 'Fetch_LiveMatch_Success':
+        case 'Fetch_MatchDetails_Success':
             return {
                 ...state,
                 isLoading: false,
                 isError: false,
             }
-        case 'Fetch_LiveMatch_Failure':
+        case 'Fetch_MatchDetails_Failure':
             return {
                 ...state,
                 isLoading: false,
