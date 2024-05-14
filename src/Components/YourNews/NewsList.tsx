@@ -12,6 +12,7 @@ import { ThemeContext } from "../../context/theme";
 import { useYourNewsState } from "../../context/YourNews/context";
 import { sport, team } from "../../context/YourNews/types";
 import { useMatchState } from "../../context/LiveMatches/context";
+import { matchDetails } from "../../context/LiveMatches/types";
 
 const NewsList = () => {
     const YourNewsState: any = useYourNewsState()
@@ -27,8 +28,8 @@ const NewsList = () => {
     // console.log("sports", sports)
     // console.log("teams", allTeams)
 
-    const [SelectedSport, setSelectedSport] = useState<sport | string>({ id: 0, name: "" });
-    const [Selectedteam, setSelectedTeam] = useState<team | string>("");
+    const [SelectedSport, setSelectedSport] = useState<sport>({ id: 0, name: "" });
+    const [Selectedteam, setSelectedTeam] = useState<team>({ id: 0, name: "", plays: "" });
     console.log("matches", matches)
 
     const [filteredTeams, setFilteredTeams] = useState<team[]>([]);
@@ -37,15 +38,16 @@ const NewsList = () => {
 
     useEffect(() => {
         if (SelectedSport.name) {
-            const filteredTeamList = allTeams.filter((team: team) => team.plays === SelectedSport.name);
+            const filteredTeamList = allTeams.filter((Team: team) => Team.plays === SelectedSport.name);
             setFilteredTeams(filteredTeamList);
 
-            const filteredMatchList = matches.filter((match) => match.sportName === SelectedSport.name);
+            const filteredMatchList = matches.filter((match: matchDetails) => match.sportName === SelectedSport.name);
             setFilteredMatches(filteredMatchList);
 
             if (Selectedteam) {
-                const filteredMatch_Team = filteredMatchList.filter((match) =>
-                    match.teams.some((team: team) => team.name === Selectedteam.name)
+                const filteredMatch_Team = filteredMatchList.filter((match: matchDetails) =>
+                    match.teams.some((Team: { id: number; name: string }) => Team.name === Selectedteam.name)
+                    //This is an array method that tests whether at least one element in the array passes the test implemented by the provided function. It returns true if the function returns true for any element, and false otherwise.
                 );
                 setFilteredMatches(filteredMatch_Team);
             }
@@ -58,7 +60,7 @@ const NewsList = () => {
 
     useEffect(() => {
         if (Selectedteam) {
-            setSelectedSport({ name: Selectedteam.plays });
+            setSelectedSport({ id: 0, name: Selectedteam.plays });
         }
     }, [Selectedteam]);
 
@@ -147,8 +149,8 @@ const NewsList = () => {
                 </div>
             </div>
             <div className="h-[55vh] w-full flex max-[769px]:flex-wrap min-[769px]:flex-col gap-5 overflow-y-scroll scrollbar">
-                {filteredMatches.map((match) => (
-                    <div className={`mx-auto md:h-48 md:w-[80%] h-56 w-56 ${theme == 'dark' ? "bg-violet-700 hover:bg-violet-600 text-white border-violet-950" : "bg-violet-300 border-violet-900 hover:bg-violet-200"}  border  rounded-md flex flex-col items-center justify-evenly`}>
+                {filteredMatches.map((match, index) => (
+                    <div key={index} className={`mx-auto md:h-48 md:w-[80%] h-56 w-56 ${theme == 'dark' ? "bg-violet-700 hover:bg-violet-600 text-white border-violet-950" : "bg-violet-300 border-violet-900 hover:bg-violet-200"}  border  rounded-md flex flex-col items-center justify-evenly`}>
                         <p className="mx-auto h-10 flex justify-between items-center w-[95%] font-bold text-lg">
                             {match.sportName}
                             {match.isRunning &&
