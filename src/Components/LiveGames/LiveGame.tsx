@@ -15,7 +15,7 @@ const LiveGame = () => {
   const { isLoading, matches, isError, errorMessage } = state
 
   const LiveMatches: matchDetails[] = matches.filter((match: Match) => match.isRunning)//This will contain Live match Details
-  console.log("LiveMatchesDetails", LiveMatches)
+  // console.log("LiveMatchesDetails", LiveMatches)
 
   if (isLoading) {
     return <>Loading...</>
