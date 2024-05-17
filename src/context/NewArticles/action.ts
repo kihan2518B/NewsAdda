@@ -10,7 +10,7 @@ export const fetchArticles = async (dispatch: ArticlesDispatch) => {
             headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${token}` }
         })
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
 
         dispatch({ type: "Fetch_Article_Success", payload: data })
     } catch (error) {

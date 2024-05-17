@@ -4,14 +4,16 @@ const NewsList = React.lazy(() => import("./NewsList"))
 
 import { useYourNewsDispatch } from "../../context/YourNews/context";
 import { fetchSports, fetchTeams } from "../../context/YourNews/action";
+import { fetchPreferences } from "../../context/Preferences/action";
+import { usePreferencesDispatch } from "../../context/Preferences/context";
 
 const YourNews = () => {
     const YourNewsDispatch: any = useYourNewsDispatch()
-
+    const PreferencesDispatch: any = usePreferencesDispatch()
     useEffect(() => {
-        console.log("fetch Req")
         fetchSports(YourNewsDispatch);
-        fetchTeams(YourNewsDispatch)
+        fetchTeams(YourNewsDispatch);
+        fetchPreferences(PreferencesDispatch)
     }, [])
     return (
         <React.Suspense fallback={<div>Loading...</div>}>

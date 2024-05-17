@@ -1,6 +1,6 @@
-import { useContext } from "react"
+import React, { useContext } from "react"
 import NewsArticles from "../NewsArtilces"
-import YourNews from "../YourNews"
+const YourNews = React.lazy(() => import('../YourNews'))
 
 import { ThemeContext } from "../../context/theme"
 
@@ -14,7 +14,9 @@ const TrendingNews = () => {
                     <NewsArticles />
                 </div>
                 <div className={`${theme == 'dark' ? ' shadow-violet-600' : 'shadow-violet-400 '} shadow-md rounded-xl w-full md:w-1/3 flex-grow sm:col-span-1 min-h-96`}>
-                    <YourNews />
+                    <React.Suspense fallback={<div>Loading...</div>}>
+                        <YourNews />
+                    </React.Suspense>
                 </div>
             </div>
 

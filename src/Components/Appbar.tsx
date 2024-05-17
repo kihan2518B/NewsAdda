@@ -1,6 +1,6 @@
-import { UserCircleIcon } from '@heroicons/react/24/outline';
+import { UserCircleIcon, AdjustmentsVerticalIcon } from '@heroicons/react/24/outline';
 import { Fragment, useContext, useState } from 'react';
-import { Menu, Dialog, Transition, Switch } from '@headlessui/react';
+import { Menu, Button, Dialog, DialogPanel, DialogTitle, Transition, TransitionChild, Switch } from '@headlessui/react';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../context/theme';
@@ -8,6 +8,7 @@ import { ThemeContext } from '../context/theme';
 import { API_ENDPOINT } from '../config/constants';
 
 import logo from '../assets/NewsAdda_logo.png';
+import PrefrencesForm from './Prefrences/PrefrencesForm';
 
 type Input = {
     current_password: string,
@@ -29,7 +30,12 @@ const Appbar = () => {
         setTheme(newTheme)
     }
 
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpenPrefrences, setIsOpenPrefrences] = useState(false);
+
+    const openPrefrencesModal = () => setIsOpenPrefrences(true);
+    const closePrefrencesModal = () => setIsOpenPrefrences(false);
+
+    const [isOpenChangePassword, setIsOpenChangePassword] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm<Input>()
     const navigate = useNavigate();
     const token = localStorage.getItem("authToken") ?? ""
@@ -54,11 +60,11 @@ const Appbar = () => {
         }
     }
     function open() {
-        setIsOpen(true)
+        setIsOpenChangePassword(true)
     }
 
     function closeModal() {
-        setIsOpen(false)
+        setIsOpenChangePassword(false)
     }
     return (
         <>
@@ -68,6 +74,9 @@ const Appbar = () => {
                         <img className='h-20 w-40 object-cover' src={logo} alt="" />
                     </div>
                     <div className=" w-1/2 flex justify-end items-center">
+                        <div className="">
+                            <AdjustmentsVerticalIcon onClick={openPrefrencesModal} className="h-6 w-6 mr-3 cursor-pointer text-violet-200" />
+                        </div>
                         <Switch
                             checked={enabled}
                             onChange={toggleTheme}
@@ -121,7 +130,7 @@ const Appbar = () => {
                                         </Menu.Item>
                                         <Menu.Item>
                                             {({ active }) => (
-                                                <Link to={"/signin"}
+                                                <Link to={"/signout"}
                                                     className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
                                                         } group flex w-full items-center rounded-xl px-2 py-2 text-sm border-violet-300 border-2`}
                                                 >
@@ -148,8 +157,43 @@ const Appbar = () => {
                 </div>
             </div >
 
+            {/* This is Prefrences Model */}
+            <Transition appear show={isOpenPrefrences}>
+                <Dialog as="div" className="relative z-10 focus:outline-none" onClose={closePrefrencesModal}>
+                    <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4">
+                            <TransitionChild
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 transform-[scale(95%)]"
+                                enterTo="opacity-100 transform-[scale(100%)]"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 transform-[scale(100%)]"
+                                leaveTo="opacity-0 transform-[scale(95%)]"
+                            >
+                                <DialogPanel className={`w-full max-w-md rounded-xl ${theme == 'dark' ? ' bg-violet-700/50' : ' bg-violet-400/50'} p-6 backdrop-blur-2xl`}>
+                                    <DialogTitle as="h3" className={`text-2xl  ${theme == "dark" ? "text-violet-50" : "text-violet-800"} font-medium`}>
+                                        Prefrences
+                                    </DialogTitle>
+                                    <div className="mt-2 text-sm/6 text-white/50">
+                                        <PrefrencesForm />
+                                    </div>
+                                    <div className="mt-4">
+                                        <Button
+                                            className={`shadow-sm ${theme == 'dark' ? 'bg-violet-500 text-violet-50 hover:bg-violet-600' : 'bg-gray-200 hover:text-violet-50 text-violet-900 hover:bg-violet-500'} font-medium shadow-violet-600 rounded py-1.5 px-3`}
+                                            onClick={closePrefrencesModal}
+                                        >
+                                            Close
+                                        </Button>
+                                    </div>
+                                </DialogPanel>
+                            </TransitionChild>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition >
+
             {/* This Form is for change password */}
-            < Transition appear show={isOpen} as={Fragment}>
+            < Transition appear show={isOpenChangePassword} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>
                     <Transition.Child
                         as={Fragment}

@@ -28,7 +28,7 @@ const LiveGame = () => {
     refreshMatch(matchId, MatchesDispatch, state)
   }
 
-  console.log("matches", matches);
+  // console.log("matches", matches);
   return (
     <>
       {LiveMatches.map((match) => (
