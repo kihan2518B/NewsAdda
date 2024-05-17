@@ -179,7 +179,7 @@ const Appbar = () => {
                                     </div>
                                     <div className="mt-4">
                                         <Button
-                                            className={`shadow-sm ${theme == 'dark' ? 'bg-violet-500 text-violet-50 hover:bg-violet-600' : 'bg-gray-200 hover:text-violet-50 text-violet-900 hover:bg-violet-500'} font-medium shadow-violet-600 rounded py-1.5 px-3`}
+                                            className={`shadow-sm ${theme == 'dark' ? 'bg-violet-500 text-violet-50 hover:bg-violet-600' : 'bg-gray-200 hover:text-violet-50 text-violet-900 hover:bg-violet-500'} font-medium shadow-violet-600 rounded w-20 h-7`}
                                             onClick={closePrefrencesModal}
                                         >
                                             Close

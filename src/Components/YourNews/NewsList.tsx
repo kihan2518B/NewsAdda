@@ -37,7 +37,7 @@ const NewsList = () => {
 
     const [filteredSports, setfilteredSports] = useState(sports)
     const [filteredTeams, setFilteredTeams] = useState<team[]>([]);
-    const [filteredMatches, setFilteredMatches] = useState<any[]>([]);
+    const [filteredMatches, setFilteredMatches] = useState<matchDetails[]>([]);
 
     const token = localStorage.getItem("authToken")
 
@@ -60,30 +60,16 @@ const NewsList = () => {
                 // console.log("filtSports", filtSports)
                 setfilteredSports(filtSports)
 
-            } else {
-                setfilteredSports(sports)
             }
         }
         else {
             console.log("User not signed in")
+            setfilteredSports(sports)
 
         }
     }, [allTeams, matches, PreferencesState, sports])
 
-    useEffect(() => {
-        // Filter matches based on the preferred sports from preferences
-        const preferredFilteredMatches = matches.filter((Match: matchDetails) =>
-            PreferencesState.preferences.selectedSports.some((Sport: string) => {
-                console.log(Sport === Match.sportName)
-                return Sport === Match.sportName
-            })
-        );
-        console.log("preferredFilteredMatches", preferredFilteredMatches)
-        console.log("PreferencesState.preferences.selectedSports", PreferencesState.preferences.selectedSports)
-        // setFilteredMatches(preferredFilteredMatches);
-    }, [PreferencesState.preferences.selectedSports, matches]);
 
-    // console.log(filteredTeams)
     useEffect(() => {
         //initailly there will not be any team name we will update it when sport is selected
 
@@ -113,9 +99,23 @@ const NewsList = () => {
             }
         } else {
             setFilteredTeams([]);
-            setFilteredMatches(matches);
+            if (PreferencesState.preferences.selectedTeams.length != 0 || PreferencesState.preferences.selectedSports.length != 0) {   //If userPrefrences is there (i.e. user is loggedin)
+
+                // Filter matches based on the preferred sports from preferences
+                const preferredFilteredMatches = matches.filter((Match: matchDetails) =>
+                    PreferencesState.preferences.selectedSports.some((Sport: string) => {
+                        console.log(Sport === Match.sportName)
+                        return Sport === Match.sportName
+                    })
+                );
+                console.log("preferredFilteredMatches", preferredFilteredMatches)
+                setFilteredMatches(preferredFilteredMatches);
+                // console.log(filteredMatches)
+            } else {
+                setFilteredMatches(matches);
+            }
         }
-    }, [SelectedSport, allTeams, matches, sports]);
+    }, [SelectedSport, allTeams, matches, sports, PreferencesState]);
 
     useEffect(() => {
         // console.log(Selectedteam)

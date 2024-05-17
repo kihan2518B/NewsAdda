@@ -4,10 +4,15 @@ import { useYourNewsState } from "../../context/YourNews/context"
 import { ThemeContext } from "../../context/theme"
 import { sport, team } from "../../context/YourNews/types"
 import { API_ENDPOINT } from "../../config/constants"
+import { usePreferencesState } from "../../context/Preferences/context"
+import { UpdatePreferences } from "../../context/Preferences/action"
 
 
 const PrefrencesForm = () => {
   const YourNewsState: any = useYourNewsState()
+  const PreferencesState: any = usePreferencesState()
+  console.log(PreferencesState)
+
   const { theme } = useContext(ThemeContext)
   const { isLoading, isError, teams, sports, errorMessage } = YourNewsState;
 
@@ -37,57 +42,20 @@ const PrefrencesForm = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken")
-    const fetchPref = async () => {
-      const res = await fetch(`${API_ENDPOINT}/user/preferences`, {
-        headers: { 'Content-Type': 'application/json', 'Authorization': `bearer ${token}` }
-      })
 
-      const data = await res.json()
-      // console.log("Prefrences", data.preferences)
-      setSelectedSports(data.preferences.selectedSports)
-      setSelectedTeams(data.preferences.selectedTeams)
+    if (PreferencesState.preferences.selectedTeams.length != 0 || PreferencesState.preferences.selectedSports.length != 0) {   //If userPrefrences is there (i.e. user is loggedin)
+      console.log("selectedSports", selectedSports)
+      console.log("selectedTeams", selectedTeams)
+
+      setSelectedSports(PreferencesState.preferences.selectedSports)
+      setSelectedTeams(PreferencesState.preferences.selectedTeams)
     }
-    fetchPref()
-  }, [])
+  }, [PreferencesState])
   console.log("selectedSports", selectedSports)
   console.log("selectedTeams", selectedTeams)
 
   const handleSubmit = async () => {
-    try {
-      const response = await fetch(`${API_ENDPOINT}/user/preferences`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          preferences: {
-            selectedSports,
-            selectedTeams,
-          }
-        }),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to update preferences');
-      }
-
-      // Save selected preferences in localStorage
-      let userData = JSON.parse(localStorage.getItem('userData') ?? '{}');
-      localStorage.setItem(
-        'userData',
-        JSON.stringify({
-          ...userData,
-          preferences: {
-            selectedSports,
-            selectedTeams,
-          },
-        })
-      );
-      userData = JSON.parse(localStorage.getItem('userData') || '{}');
-    } catch (error) {
-      console.error('Error updating preferences:', error);
-    }
+    UpdatePreferences(selectedSports, selectedTeams)
   };
 
   return (
@@ -129,7 +97,7 @@ const PrefrencesForm = () => {
             </div>
           ))}
         </div>
-        <button type="submit" onClick={handleSubmit} className={`shadow-sm ${theme == 'dark' ? 'bg-violet-500 text-violet-50 hover:bg-violet-600' : 'bg-gray-200 hover:text-violet-50 text-violet-900 hover:bg-violet-500'} font-medium shadow-violet-600 rounded py-1.5 px-2`}>Submit</button>
+        <button type="submit" onClick={handleSubmit} className={`shadow-sm ${theme == 'dark' ? 'bg-violet-500 text-violet-50 hover:bg-violet-600' : 'bg-gray-200 hover:text-violet-50 text-violet-900 hover:bg-violet-500'} font-medium shadow-violet-600 rounded h-7 w-20`}>Submit</button>
       </form>
     </div>
   )

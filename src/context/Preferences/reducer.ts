@@ -24,6 +24,9 @@ export type PreferencesActions =
     | { type: 'Fetch_Preferences_Request' }
     | { type: 'Fetch_Preferences_Success'; payload:{selectedTeams: team[];selectedSports: sport[];} }
     | { type: 'Fetch_Preferences_Error'; payload: string }
+    | { type: 'Update_Preferences_Request' }
+    | { type: 'Update_Preferences_Success'; payload:{selectedTeams: team[];selectedSports: sport[];} }
+    | { type: 'Update_Preferences_Error'; payload: string }
 
 export type PreferencesDispatch = React.Dispatch<PreferencesActions>;
 

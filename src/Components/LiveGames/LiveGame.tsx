@@ -46,7 +46,7 @@ const LiveGame = () => {
           </div>
           <hr className="border-1 border-violet-600" />
           {match.score && Object.entries(match.score).map(([teamName, score]) => (
-            <div className="flex flex-col">
+            <div key={teamName} className="flex flex-col">
               <div className="flex h-4 w-full items-center justify-around">
                 <div className="flex justify-end w-full font-bold text-sm">
                   <p>{teamName}:</p>

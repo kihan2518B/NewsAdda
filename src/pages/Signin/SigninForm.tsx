@@ -49,6 +49,7 @@ const SigninForm: React.FC = () => {
                 <button type="submit" className="w-full bg-violet-700 hover:bg-violet-800 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline-gray mt-4">Sign In</button>
             </form>
             <a href="/signup" className="text-violet-800 underline">Not a user</a>
+            <a href="/" className="ml-5 text-right text-violet-800 underline">Go to dashboard without sign_in</a>
         </>
     );
 };
