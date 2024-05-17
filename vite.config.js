@@ -36,7 +36,7 @@ export default defineConfig({
             "sizes": "125x125"
           },
           {
-            "src": "/LargeTile.scale-400.png",
+            "src": "/android-chrome-192x192.png",
             "type": "image/png",
             "sizes": "150x150",
             "purpose": "any maskable"
