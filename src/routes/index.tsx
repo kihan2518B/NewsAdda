@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
+import React from "react";
 
-import Dashboard from "../pages/Dashboard";
-import Signin from "../pages/Signin";
-import Signup from "../pages/Signup";
-import Signout from "../pages/signout";
-import ArticleDetailsContainer from "../pages/ArticleDetails";
-import MatchDetailsContainer from "../pages/MatchDetails";
+const Dashboard = React.lazy(() => import("../pages/Dashboard"))
+const Signin = React.lazy(() => import("../pages/Signin"))
+const Signup = React.lazy(() => import("../pages/Signup"))
+const Signout = React.lazy(() => import("../pages/signout"))
+const ArticleDetailsContainer = React.lazy(() => import("../pages/ArticleDetails"))
+const MatchDetailsContainer = React.lazy(() => import("../pages/MatchDetails"))
 
 const router = createBrowserRouter([
     {
