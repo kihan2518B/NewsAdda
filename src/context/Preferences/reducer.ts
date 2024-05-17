@@ -1,32 +1,30 @@
-import { team,sport } from "../YourNews/types"
+import { team, sport } from "../YourNews/types"
 
-export type preferencesState ={
+export type preferencesState = {
    preferences: {
-    selectedTeams: team[];
-    selectedSports: sport[];
-},
+      selectedTeams: team[];
+      selectedSports: sport[];
+   },
    isLoading: boolean,
    isError: boolean,
-    errorMessage: string
+   errorMessage: string
 }
 
 export const initialState: preferencesState = {
-    preferences: {
-        selectedTeams: [],
-        selectedSports: []
-    },
-    isLoading: false,
-    isError: false,
-    errorMessage: ""
+   preferences: {
+      selectedTeams: [],
+      selectedSports: []
+   },
+   isLoading: false,
+   isError: false,
+   errorMessage: ""
 }
 
 export type PreferencesActions =
-    | { type: 'Fetch_Preferences_Request' }
-    | { type: 'Fetch_Preferences_Success'; payload:{selectedTeams: team[];selectedSports: sport[];} }
-    | { type: 'Fetch_Preferences_Error'; payload: string }
-    | { type: 'Update_Preferences_Request' }
-    | { type: 'Update_Preferences_Success'; payload:{selectedTeams: team[];selectedSports: sport[];} }
-    | { type: 'Update_Preferences_Error'; payload: string }
+   | { type: 'Fetch_Preferences_Request' }
+   | { type: 'Fetch_Preferences_Success'; payload: { selectedTeams: team[]; selectedSports: sport[]; } }
+   | { type: 'Fetch_Preferences_Error'; payload: string }
+
 
 export type PreferencesDispatch = React.Dispatch<PreferencesActions>;
 

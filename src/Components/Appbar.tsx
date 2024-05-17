@@ -129,27 +129,31 @@ const Appbar = () => {
                                                 </Link>
                                             )}
                                         </Menu.Item>
-                                        <Menu.Item>
-                                            {({ active }) => (
-                                                <Link to={"/signout"}
-                                                    className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                                                        } group flex w-full items-center rounded-xl px-2 py-2 text-sm border-violet-300 border-2`}
-                                                >
-                                                    Sign Out
-                                                </Link>
-                                            )}
-                                        </Menu.Item>
-                                        <Menu.Item>
-                                            {({ active }) => (
-                                                <button
-                                                    onClick={open}
-                                                    className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                                                        } group flex w-full items-center rounded-xl px-2 py-2 text-sm border-violet-300 border-2`}
-                                                >
-                                                    Change Password
-                                                </button>
-                                            )}
-                                        </Menu.Item>
+                                        {token &&
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <Link to={"/signout"}
+                                                        className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                                                            } group flex w-full items-center rounded-xl px-2 py-2 text-sm border-violet-300 border-2`}
+                                                    >
+                                                        Sign Out
+                                                    </Link>
+                                                )}
+                                            </Menu.Item>
+                                        }
+                                        {token &&
+                                            <Menu.Item>
+                                                {({ active }) => (
+                                                    <button
+                                                        onClick={open}
+                                                        className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                                                            } group flex w-full items-center rounded-xl px-2 py-2 text-sm border-violet-300 border-2`}
+                                                    >
+                                                        Change Password
+                                                    </button>
+                                                )}
+                                            </Menu.Item>
+                                        }
                                     </div>
                                 </Menu.Items>
                             </Transition>

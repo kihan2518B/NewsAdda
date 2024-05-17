@@ -229,7 +229,7 @@ const NewsList = () => {
                         <p className="mx-auto h-24 w-[95%] overflow-y-hidden">
                             {match.story}
                         </p>
-                        <button className="mx-auto h-10 mb-2 w-[95%] bg-violet-500 flex justify-center items-center rounded-lg hover:shadow-sm hover:shadow-white">Read More</button>
+                        <a href={`matches/${match.id}`} className="mx-auto h-10 mb-2 w-[95%] bg-violet-500 flex justify-center items-center rounded-lg hover:shadow-sm hover:shadow-white">Read More</a>
                     </div>
                 ))}
 

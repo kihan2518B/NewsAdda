@@ -84,9 +84,9 @@ const NewsArticles = () => {
                                                     {article.summary}
                                                 </p>
                                                 <div className="h-fit w-full pl-2 flex items-center text-lg max-[1200px]:text-base max-[1000px]:text-sm max-[835px]:text-xs -green-600">
-                                                    <div className="cursor-pointer h-full w-full max-[321px]:w-[50%] underline font-bold  flex items-center justify-end">
+                                                    <a href={`/articles/${article.id}`} className="cursor-pointer h-full w-full max-[321px]:w-[50%] underline font-bold  flex items-center justify-end">
                                                         Read More...
-                                                    </div>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div className="h-full w-[30%] flex justify-center items-center">
