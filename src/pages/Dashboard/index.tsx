@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
+
 import Appbar from "../../Components/Appbar"
-import LiveGames from "../../Components/LiveGames"
+const LiveGames = React.lazy(() => import('../../Components/LiveGames'))
 import TrendingNews from "../../Components/TrendingNews"
+
+import ErrorBoundary from "../../Components/ErrorBoundary"
 
 const Dashboard = () => {
     const token = localStorage.getItem("userData") ?? ""
@@ -25,7 +28,11 @@ const Dashboard = () => {
                 <div className="absolute h-10 w-32 top-0 left-0 bg-green-600 flex justify-center items-center">Signin Successful!</div>
             )}
             <Appbar />
-            <LiveGames />
+            <ErrorBoundary>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <LiveGames />
+                </Suspense>
+            </ErrorBoundary>
             <TrendingNews />
         </div>
     )

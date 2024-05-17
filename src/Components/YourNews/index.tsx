@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 
 const NewsList = React.lazy(() => import("./NewsList"))
 
@@ -6,6 +6,8 @@ import { useYourNewsDispatch } from "../../context/YourNews/context";
 import { fetchSports, fetchTeams } from "../../context/YourNews/action";
 import { fetchPreferences } from "../../context/Preferences/action";
 import { usePreferencesDispatch } from "../../context/Preferences/context";
+
+import ErrorBoundary from "../ErrorBoundary";
 
 const YourNews = () => {
     const YourNewsDispatch: any = useYourNewsDispatch()
@@ -16,9 +18,11 @@ const YourNews = () => {
         fetchPreferences(PreferencesDispatch)
     }, [])
     return (
-        <React.Suspense fallback={<div>Loading...</div>}>
-            <NewsList />
-        </React.Suspense>
+        <ErrorBoundary>
+            <Suspense fallback={<div>Loading...</div>}>
+                <NewsList />
+            </Suspense>
+        </ErrorBoundary>
     )
 }
 
