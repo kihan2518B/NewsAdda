@@ -75,7 +75,8 @@ const Appbar = () => {
                     </div>
                     <div className=" w-1/2 flex justify-end items-center">
                         <div className="">
-                            <AdjustmentsVerticalIcon onClick={openPrefrencesModal} className="h-6 w-6 mr-3 cursor-pointer text-violet-200" />
+                            {token && <AdjustmentsVerticalIcon onClick={openPrefrencesModal} className="h-6 w-6 mr-3 cursor-pointer text-violet-200" />
+                            }
                         </div>
                         <Switch
                             checked={enabled}

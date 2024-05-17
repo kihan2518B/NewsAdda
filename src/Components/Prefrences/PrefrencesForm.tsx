@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from "react"
 import { useYourNewsState } from "../../context/YourNews/context"
 import { ThemeContext } from "../../context/theme"
 import { sport, team } from "../../context/YourNews/types"
-import { API_ENDPOINT } from "../../config/constants"
 import { usePreferencesState } from "../../context/Preferences/context"
 import { UpdatePreferences } from "../../context/Preferences/action"
 
@@ -16,7 +15,6 @@ const PrefrencesForm = () => {
   const { theme } = useContext(ThemeContext)
   const { isLoading, isError, teams, sports, errorMessage } = YourNewsState;
 
-  const token = localStorage.getItem("authToken")
 
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);

@@ -1,5 +1,4 @@
 import { API_ENDPOINT } from "../../config/constants";
-import { sport, team } from "../YourNews/types";
 import { PreferencesDispatch } from './reducer'
 
 export const fetchPreferences = async (dispatch: PreferencesDispatch) => {
