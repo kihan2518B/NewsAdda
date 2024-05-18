@@ -12,22 +12,18 @@ import { ThemeContext } from "../../context/theme";
 import { sport, team } from "../../context/YourNews/types";
 
 import { useYourNewsState } from "../../context/YourNews/context";
-import { useMatchState } from "../../context/LiveMatches/context";
-import { matchDetails } from "../../context/LiveMatches/types";
 import { usePreferencesState } from "../../context/Preferences/context";
 import { useArticleState } from "../../context/NewArticles/context";
 import { Article } from "../../context/NewArticles/types";
 
 const NewsList = () => {
     const YourNewsState: any = useYourNewsState()
-    const MatchesState: any = useMatchState()
 
     const PreferencesState: any = usePreferencesState()
     const ArticleState: any = useArticleState()
 
     const { theme } = useContext(ThemeContext)
 
-    const { matches } = MatchesState
     const { articles } = ArticleState
     const { isLoading, isError, sports, errorMessage } = YourNewsState;
     // console.log(articles)
