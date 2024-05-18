@@ -1,18 +1,20 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useEffect } from "react";
 
 import { ThemeContext } from "../../context/theme";
-import { reducer, initialState } from '../../context/NewArticles/reducer';
 import { fetchArticles } from '../../context/NewArticles/action';
+import { useArticleState, useArticlesDispatch } from '../../context/NewArticles/context';
+import { Article } from '../../context/NewArticles/types';
 
 const NewsArticles = () => {
     const { theme } = useContext(ThemeContext)
-    const [state, dispatch] = useReducer(reducer, initialState)
-    const { isLoading, isError, errorMessage, articles } = state
+    const ArticleState: any = useArticleState()
+    const ArticleDispatch: any = useArticlesDispatch()
+    const { isLoading, isError, errorMessage, articles } = ArticleState
     // console.log("articles: ", articles);
 
     useEffect(() => {
-        fetchArticles(dispatch)
+        fetchArticles(ArticleDispatch)
     }, [])
 
     if (isLoading) {
@@ -22,7 +24,7 @@ const NewsArticles = () => {
         return <>{errorMessage}</>
     }
 
-    articles.sort((a, b) => {
+    articles.sort((a: Article, b: Article) => {
         // Parse dates from strings
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
@@ -38,7 +40,7 @@ const NewsArticles = () => {
 
     //Adding sportsname to set to make sure there is unique sport's Name
     const categoriesSet = new Set();
-    articles.forEach((article) => {
+    articles.forEach((article: Article) => {
         categoriesSet.add(article.sport.name);
     });
 
@@ -68,7 +70,7 @@ const NewsArticles = () => {
                         {categories.map((category) => (
                             <TabPanel key={category}>
                                 <div id="Articles" className={`h-[70vh] md:h-[80vh] w-full overflow-y-auto scrollbar2 flex flex-col gap-3 rounded-b-xl`}>
-                                    {articles.filter((article) => article.sport.name === category).map((article) => (
+                                    {articles.filter((article: Article) => article.sport.name === category).map((article: Article) => (
                                         <div key={article.id} className={`rounded-xl mx-auto flex gap-2 ${theme == 'dark' ? "bg-violet-700 hover:bg-violet-600 text-white border-violet-950" : "bg-violet-300 border-violet-900 hover:bg-violet-200"} h-[15vw] max-[651px]:h-[16vw] max-[592px]:h-[18vw] max-[581px]:h-[20vw] max-[545px]:h-[22vw] max-[500px]:h-[26vw] max-[421px]:h-[28vw] max-[391px]:h-[32vw] max-[381px]:h-[34vw] max-[353px]:h-[36vw] max-[321px]:h-[38vw] w-[98%] border `}>
                                             <div className="h-full w-[70%] flex flex-col">
                                                 <div className="h-[5vw] w-full pl-2 flex justify-between text-lg max-[1200px]:text-base max-[1000px]:text-sm max-[835px]:text-xs ">

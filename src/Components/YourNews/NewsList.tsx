@@ -15,17 +15,22 @@ import { useYourNewsState } from "../../context/YourNews/context";
 import { useMatchState } from "../../context/LiveMatches/context";
 import { matchDetails } from "../../context/LiveMatches/types";
 import { usePreferencesState } from "../../context/Preferences/context";
+import { useArticleState } from "../../context/NewArticles/context";
+import { Article } from "../../context/NewArticles/types";
 
 const NewsList = () => {
     const YourNewsState: any = useYourNewsState()
     const MatchesState: any = useMatchState()
 
     const PreferencesState: any = usePreferencesState()
+    const ArticleState: any = useArticleState()
 
     const { theme } = useContext(ThemeContext)
 
     const { matches } = MatchesState
+    const { articles } = ArticleState
     const { isLoading, isError, sports, errorMessage } = YourNewsState;
+    // console.log(articles)
     // console.log(PreferencesState.preferences)
     const allTeams = YourNewsState.teams
     // console.log("sports", sports)
@@ -37,7 +42,7 @@ const NewsList = () => {
 
     const [filteredSports, setfilteredSports] = useState(sports)
     const [filteredTeams, setFilteredTeams] = useState<team[]>([]);
-    const [filteredMatches, setFilteredMatches] = useState<matchDetails[]>([]);
+    const [filteredArticles, setFilteredArticles] = useState<Article[]>([])
 
     const token = localStorage.getItem("authToken")
 
@@ -67,7 +72,7 @@ const NewsList = () => {
             setfilteredSports(sports)
 
         }
-    }, [allTeams, matches, PreferencesState, sports])
+    }, [allTeams, articles, PreferencesState, sports])
 
 
     useEffect(() => {
@@ -78,8 +83,9 @@ const NewsList = () => {
 
             setSelectedTeam({ id: 0, name: "", plays: "" })
 
-            const filteredMatch_Sport = matches.filter((match: matchDetails) => match.sportName === SelectedSport.name);
-            console.log("filteredMatchList", filteredMatch_Sport)
+            const filteredArticle_Sport = articles.filter((article: Article) => article.sport.name === SelectedSport.name);
+            console.log("filteredArticleList", filteredArticle_Sport)
+
             if (token) { //check if user is signned in
                 // Filter preferred teams from the filtered team list
                 const preferredTeams = PreferencesState.preferences.selectedTeams;
@@ -89,42 +95,46 @@ const NewsList = () => {
                 setFilteredTeams(filteredPreferredTeams);
 
                 if (filteredPreferredTeams.length == 0) {
-                    setFilteredMatches([]);
+                    setFilteredArticles([])
                 } else {
-                    setFilteredMatches(filteredMatch_Sport)
+                    setFilteredArticles(filteredArticle_Sport)
                 }
-            } else { //User is not signed in
-                setFilteredMatches(filteredMatch_Sport)
+            } else {
+                setFilteredArticles(filteredArticle_Sport)
                 setFilteredTeams(filteredTeamList);
             }
+
         } else {
             setFilteredTeams([]);
             if (PreferencesState.preferences.selectedTeams.length != 0 || PreferencesState.preferences.selectedSports.length != 0) {   //If userPrefrences is there (i.e. user is loggedin)
 
-                // Filter matches based on the preferred sports from preferences
-                const preferredFilteredMatches = matches.filter((Match: matchDetails) =>
+                // Filter articles based on the preferred sports from preferences
+                const preferredFilteredArticles = articles.filter((article: Article) =>
                     PreferencesState.preferences.selectedSports.some((Sport: string) => {
-                        console.log(Sport === Match.sportName)
-                        return Sport === Match.sportName
+                        // console.log(Sport === article.sport.name)
+                        return Sport === article.sport.name
                     })
                 );
-                console.log("preferredFilteredMatches", preferredFilteredMatches)
-                setFilteredMatches(preferredFilteredMatches);
-                // console.log(filteredMatches)
-            } else {
-                setFilteredMatches(matches);
+                // console.log("preferredFilteredArticles", preferredFilteredArticles)
+                setFilteredArticles(preferredFilteredArticles)
+
+            } else {//User is not signed in
+                setFilteredArticles(articles);
             }
         }
-    }, [SelectedSport, allTeams, matches, sports, PreferencesState]);
+    }, [SelectedSport, allTeams, articles, sports, PreferencesState]);
 
+    // console.log(filteredArticles)
     useEffect(() => {
         // console.log(Selectedteam)
         // setSelectedTeam(filteredTeams[1])
         if (typeof Selectedteam !== "string" && Selectedteam.name) {
-            const filteredMatch_Team = matches.filter((match: matchDetails) =>
-                match.teams.some((Team: { id: number; name: string }) => Team.name === Selectedteam.name)
+
+            const filteredArticles_Team = articles.filter((article: Article) =>
+                article.teams.some((Team: { id: number; name: string }) => Team.name === Selectedteam.name)
             );
-            setFilteredMatches(filteredMatch_Team);
+            console.log("filteredArticles_Team", filteredArticles_Team)
+            setFilteredArticles(filteredArticles_Team)
         }
     }, [Selectedteam])
 
@@ -136,7 +146,6 @@ const NewsList = () => {
         return <div className="text-red-500">{errorMessage}</div>
     }
 
-    // console.log("filteredTeams", filteredTeams)
     return (
         <div className={`md:h-full ${theme == 'dark' ? "bg-violet-500  text-white " : "bg-violet-400 "} rounded-xl flex flex-col h-full w-full`}>
             <div className="mx-auto md:h-40 md:w-[80%] h-fit py-4 w-full flex md:flex-col md:justify-evenly ">
@@ -216,20 +225,17 @@ const NewsList = () => {
             </div>
             <div className="h-[55vh] w-full flex max-[769px]:flex-wrap min-[769px]:flex-col gap-5 overflow-y-scroll scrollbar">
 
-                {filteredMatches.length == 0 ? <div className="text-red-500 font-bold text-2xl">No Matches to show</div> : filteredMatches.map((match, index) => (
+                {filteredArticles.length == 0 ? <div className="text-red-500 font-bold text-2xl">No Articles to show</div> : filteredArticles.map((article, index) => (
                     <div key={index} className={`mx-auto md:h-48 md:w-[80%] h-56 w-56 ${theme == 'dark' ? "bg-violet-700 hover:bg-violet-600 text-white border-violet-950" : "bg-violet-300 border-violet-900 hover:bg-violet-200"}  border  rounded-md flex flex-col items-center justify-evenly`}>
                         <p className="mx-auto h-10 flex justify-between items-center w-[95%] font-bold text-lg">
-                            {match.sportName}
-                            {match.isRunning &&
-                                <li className="text-red-500">
-                                    {match.isRunning ? "Live" : ""}
-                                </li>
-                            }
+                            {article.sport.name}
                         </p>
                         <p className="mx-auto h-24 w-[95%] overflow-y-hidden">
-                            {match.story}
+                            Title: {article.title}
+                            <br></br>
+                            Teams: {article.teams[0]?.name}
                         </p>
-                        <a href={`matches/${match.id}`} className="mx-auto h-10 mb-2 w-[95%] bg-violet-500 flex justify-center items-center rounded-lg hover:shadow-sm hover:shadow-white">Read More</a>
+                        <a href={`articles/${article.id}`} className="mx-auto h-10 mb-2 w-[95%] bg-violet-500 flex justify-center items-center rounded-lg hover:shadow-sm hover:shadow-white">Read More</a>
                     </div>
                 ))}
 

@@ -17,7 +17,7 @@ const ArticleDetails = () => {
                     headers: { 'Content-Type': 'application/json' }
                 })
                 const data = await res.json()
-                console.log(data)
+                // console.log(data)
                 setArticle(data)
                 if (res.ok) {
                     setIsLoading(false)

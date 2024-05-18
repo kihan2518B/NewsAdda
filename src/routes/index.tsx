@@ -7,7 +7,6 @@ const Signin = React.lazy(() => import("../pages/Signin"))
 const Signup = React.lazy(() => import("../pages/Signup"))
 const Signout = React.lazy(() => import("../pages/signout"))
 const ArticleDetailsContainer = React.lazy(() => import("../pages/ArticleDetails"))
-const MatchDetailsContainer = React.lazy(() => import("../pages/MatchDetails"))
 
 const router = createBrowserRouter([
     {
@@ -22,10 +21,6 @@ const router = createBrowserRouter([
                 path: "articles/:articleId",
                 element: <ArticleDetailsContainer />
             },
-            {
-                path: "matches/:matchId",
-                element: <MatchDetailsContainer />
-            }
         ]
     },
     {

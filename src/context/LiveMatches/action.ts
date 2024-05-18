@@ -13,7 +13,7 @@ export const fetchMatches = async (dispatch: MatchesDispatch) => {
             headers: { 'content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         })
         const data = await res.json()
-        console.log(data)
+        // console.log(data)
 
         //Array containing full details of live match
         const AllMatchesDetails: matchDetails[] = []
@@ -35,7 +35,7 @@ export const fetchMatches = async (dispatch: MatchesDispatch) => {
             }
         });
 
-        console.log("AllMatchesDetails", AllMatchesDetails)
+        // console.log("AllMatchesDetails", AllMatchesDetails)
 
         //We will update state With all Live matches
         dispatch({ type: "Fetch_Matches_Success", payload: AllMatchesDetails })
