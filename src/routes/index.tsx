@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import React from "react";
 
+import Notfound from "../pages/NotFound";
 const Dashboard = React.lazy(() => import("../pages/Dashboard"))
 const Signin = React.lazy(() => import("../pages/Signin"))
 const Signup = React.lazy(() => import("../pages/Signup"))
@@ -9,6 +10,10 @@ const ArticleDetailsContainer = React.lazy(() => import("../pages/ArticleDetails
 const MatchDetailsContainer = React.lazy(() => import("../pages/MatchDetails"))
 
 const router = createBrowserRouter([
+    {
+        path: '*',
+        element: <Notfound />
+    },
     {
         path: '/',
         children: [

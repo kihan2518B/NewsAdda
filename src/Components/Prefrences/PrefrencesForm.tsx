@@ -63,7 +63,7 @@ const PrefrencesForm = () => {
         {/* Sports List */}
         {isLoading && <>Loading...</>}
         {isError && <>{errorMessage}</>}
-        <div className={`flex flex-wrap gap-3 h-20 ${theme == 'dark' ? 'text-violet-50' : 'text-black'} overflow-y-scroll scrollbar`}>
+        <div className={`flex flex-wrap gap-3 h-fit ${theme == 'dark' ? 'text-violet-50' : 'text-black'} overflow-y-scroll scrollbar`}>
           {sports.map((Sport: sport) => (
             <div key={Sport.id} className={`flex gap-1 justify-center items-center `}>
               <label htmlFor={Sport.name}>{Sport.name}:</label>
@@ -80,7 +80,7 @@ const PrefrencesForm = () => {
 
         <h3 className="text-violet-50 font-medium">Choose Your Favourite Teams</h3>
         {isLoading && <>Loading...</>}
-        <div className={`flex flex-wrap gap-3 h-20 ${theme == 'dark' ? 'text-violet-50' : 'text-black'} overflow-y-scroll scrollbar`}>
+        <div className={`flex flex-wrap gap-3 h-fit ${theme == 'dark' ? 'text-violet-50' : 'text-black'} overflow-y-scroll scrollbar`}>
           {teams.map((Team: team) => (
             <div key={Team.id} className={`flex gap-1 justify-center items-center `}>
               <label htmlFor={Team.name}>{Team.name}:</label>
