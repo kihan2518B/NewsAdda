@@ -41,7 +41,7 @@ const PrefrencesForm = () => {
 
   useEffect(() => {
 
-    if (PreferencesState.preferences.selectedTeams.length != 0 || PreferencesState.preferences.selectedSports.length != 0) {   //If userPrefrences is there (i.e. user is loggedin)
+    if (PreferencesState.preferences.selectedTeams || PreferencesState.preferences.selectedSports) {   //If userPrefrences is there (i.e. user is loggedin)
       console.log("selectedSports", selectedSports)
       console.log("selectedTeams", selectedTeams)
 

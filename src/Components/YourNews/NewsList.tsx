@@ -45,9 +45,10 @@ const NewsList = () => {
     useEffect(() => {
         if (token) {
             console.log("User signed in")
-            // console.log("Preferences", PreferencesState)
 
-            if (PreferencesState.preferences.selectedTeams.length != 0 || PreferencesState.preferences.selectedSports.length != 0) {   //If userPrefrences is there (i.e. user is loggedin)
+            //Check if user has already selected preferences or not
+            //If there are no preferences selected (A new user signedup) then filteredsports and filteredteams will be empty
+            if (PreferencesState.preferences.selectedSports || PreferencesState.preferences.selectedTeams) {   //If userPrefrences is there (i.e. user has selected preferences)
 
                 const filtTeams = allTeams.filter((Team: team) =>
                     PreferencesState.preferences.selectedTeams.includes(Team.name)
@@ -60,7 +61,6 @@ const NewsList = () => {
                 )
                 // console.log("filtSports", filtSports)
                 setfilteredSports(filtSports)
-
             }
         }
         else {
@@ -102,18 +102,22 @@ const NewsList = () => {
 
         } else {
             setFilteredTeams([]);
-            if (PreferencesState.preferences.selectedTeams.length != 0 || PreferencesState.preferences.selectedSports.length != 0) {   //If userPrefrences is there (i.e. user is loggedin)
+            if (PreferencesState.preferences.selectedSports || PreferencesState.preferences.selectedTeams) {   //If userPrefrences is there (i.e. user is loggedin)
 
-                // Filter articles based on the preferred sports from preferences
-                const preferredFilteredArticles = articles.filter((article: Article) =>
-                    PreferencesState.preferences.selectedSports.some((Sport: string) => {
-                        // console.log(Sport === article.sport.name)
-                        return Sport === article.sport.name
-                    })
-                );
-                // console.log("preferredFilteredArticles", preferredFilteredArticles)
-                setFilteredArticles(preferredFilteredArticles)
-
+                //If Array is zero then show all articles
+                if (PreferencesState.preferences.selectedSports.length == 0) {
+                    setFilteredArticles(articles);
+                } else {
+                    // Filter articles based on the preferred sports from preferences
+                    const preferredFilteredArticles = articles.filter((article: Article) =>
+                        PreferencesState.preferences.selectedSports.some((Sport: string) => {
+                            // console.log(Sport === article.sport.name)
+                            return Sport === article.sport.name
+                        })
+                    );
+                    // console.log("preferredFilteredArticles", preferredFilteredArticles)
+                    setFilteredArticles(preferredFilteredArticles)
+                }
             } else {//User is not signed in
                 setFilteredArticles(articles);
             }
