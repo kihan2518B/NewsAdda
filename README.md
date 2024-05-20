@@ -21,6 +21,22 @@ Sports Dashboard is a comprehensive platform that caters to both casual sports e
 - **Read Full Articles**: Click on the "Read More" button to view complete articles.
 - **Change Password**: Update your account password for enhanced security.
 
+<br>
+## **Visual Impressions of the Application:**
+
+**Dashboard** (/ProjectImages/Dashboard.png)
+**DarkMode** (/ProjectImages/DarkMode.png)
+**Article Details** (/ProjectImages/DetailedArticle.png)
+**SignIn Form** (/ProjectImages/SignIn.png)
+**Trending News** (/ProjectImages/TrendingNews.png)
+(/ProjectImages/TrendingNews2.png)
+**Prefenrences** (/ProjectImages/preferences.png)
+**Change Password** (/ProjectImages/ChangePass.png)
+<br>
+
+## Link to the live application - <a target="blank" href="https://newadda.netlify.app/">News Adda </a>
+## link to demo - <a target="blank" href="https://youtu.be/b7-DtGklEvo">video Demo</a>
+
 ## Getting Started
 
 ### Prerequisites
@@ -46,20 +62,5 @@ Sports Dashboard is a comprehensive platform that caters to both casual sports e
 
 ### Start the server
     ```sh
-      npm run dev
+    npm run dev
 
-<br>
-## **Visual Impressions of the Application:**
-
-**Dashboard** (/ProjectImages/Dashboard.png)
-**DarkMode** (/ProjectImages/DarkMode.png)
-**Article Details** (/ProjectImages/DetailedArticle.png)
-**SignIn Form** (/ProjectImages/SignIn.png)
-**Trending News** (/ProjectImages/TrendingNews.png)
-(/ProjectImages/TrendingNews2.png)
-**Prefenrences** (/ProjectImages/preferences.png)
-**Change Password** (/ProjectImages/ChangePass.png)
-<br>
-
-## Link to the live application - <a target="blank" href="https://newadda.netlify.app/">News Adda </a>
-## link to demo - <a target="blank" href="https://youtu.be/b7-DtGklEvo">video Demo</a>
