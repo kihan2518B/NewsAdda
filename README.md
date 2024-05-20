@@ -37,7 +37,7 @@ Sports Dashboard is a comprehensive platform that caters to both casual sports e
    cd NewsAdda
 
 3. Install dependencies:
-```sh
+  ```sh
   npm install
   
   or
