@@ -22,7 +22,7 @@ Sports Dashboard is a comprehensive platform that caters to both casual sports e
 - **Change Password**: Update your account password for enhanced security.
 
 <br>
-## **Visual Impressions of the Application:**
+**Visual Impressions of the Application:**
 
 **Dashboard** ![Dashboard](/ProjectImages/Dashboard.png)
 **DarkMode** ![DarkMode](/ProjectImages/DarkMode.png)
