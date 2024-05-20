@@ -45,8 +45,8 @@ Sports Dashboard is a comprehensive platform that caters to both casual sports e
   yarn install
 
 ### Start the server
-```sh
-  npm run dev
+    ```sh
+      npm run dev
 
 <br>
 ## **Visual Impressions of the Application:**
