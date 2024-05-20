@@ -24,14 +24,14 @@ Sports Dashboard is a comprehensive platform that caters to both casual sports e
 <br>
 ## **Visual Impressions of the Application:**
 
-**Dashboard** (/ProjectImages/Dashboard.png)
-**DarkMode** (/ProjectImages/DarkMode.png)
-**Article Details** (/ProjectImages/DetailedArticle.png)
-**SignIn Form** (/ProjectImages/SignIn.png)
-**Trending News** (/ProjectImages/TrendingNews.png)
-(/ProjectImages/TrendingNews2.png)
-**Prefenrences** (/ProjectImages/preferences.png)
-**Change Password** (/ProjectImages/ChangePass.png)
+**Dashboard** ![Dashboard](/ProjectImages/Dashboard.png)
+**DarkMode** ![DarkMode](/ProjectImages/DarkMode.png)
+**Article Details** ![Article Details](/ProjectImages/DetailedArticle.png)
+**SignIn Form** ![SignIn Form](/ProjectImages/SignIn.png)
+**Trending News** ![Trending News](/ProjectImages/TrendingNews.png)
+![Trending News](/ProjectImages/TrendingNews2.png)
+**Prefenrences** ![Prefenrences](/ProjectImages/preferences.png)
+**Change Password** ![Change Password](/ProjectImages/ChangePass.png)
 <br>
 
 ## Link to the live application - <a target="blank" href="https://newadda.netlify.app/">News Adda </a>
@@ -53,12 +53,12 @@ Sports Dashboard is a comprehensive platform that caters to both casual sports e
    cd NewsAdda
 
 3. Install dependencies:
-  ```sh
-  npm install
-  
-  or
+    ```sh
+    npm install
+    
+    or
 
-  yarn install
+    yarn install
 
 ### Start the server
     ```sh
